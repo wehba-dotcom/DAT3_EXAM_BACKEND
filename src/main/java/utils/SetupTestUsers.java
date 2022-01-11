@@ -20,6 +20,7 @@ public class SetupTestUsers {
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // Whatever you do DO NOT COMMIT and PUSH with the real passwords
 
+    
     User user = new User("user", "test");
     User admin = new User("admin", "test");
     User both = new User("user_admin", "test");
