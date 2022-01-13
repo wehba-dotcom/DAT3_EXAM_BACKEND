@@ -25,9 +25,8 @@ public class Trip implements Serializable {
     private String duration;
     private String packingList;
 
-    @OneToMany(mappedBy = "trip", cascade =CascadeType.PERSIST )
-    List<Guide> guides;
-
+    @ManyToOne
+    private Guide guide;
 
     @ManyToMany(mappedBy = "trips", cascade =CascadeType.PERSIST )
     List<Tourist> tourists;
@@ -43,20 +42,18 @@ public class Trip implements Serializable {
         this.location = location;
         this.duration = duration;
         this.packingList = packingList;
-        this.guides= new ArrayList<>();
+
         this.tourists= new ArrayList<>();
     }
 
-    public List<Guide> getGuides() {
-        return guides;
+    public Guide getGuide() {
+        return guide;
     }
 
-    public void addGuide(Guide guide) {
-        this.guides.add(guide);
-        if (guide != null) {
-            guide.setTrip(this);
-        }
+    public void setGuide(Guide guide) {
+        this.guide = guide;
     }
+
     public int getId() {
         return id;
     }

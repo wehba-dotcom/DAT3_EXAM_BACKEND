@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,20 +19,22 @@ public class Guide implements Serializable {
     private long birthYear;
     private String profile;
 
-    @ManyToOne
-    private Trip trip;
+    @OneToMany(mappedBy = "guide", cascade =CascadeType.PERSIST )
+    List<Trip> trips;
+
 
     public Guide() {
     }
 
-    public Trip getTrip() {
-        return trip;
+    public List<Trip> getTrips() {
+        return trips;
     }
 
-    public void setTrip(Trip trip) {
-        this.trip = trip;
+
+    public void addTrip(Trip trip) {
+        this.trips.add(trip);
         if (trip != null) {
-            trip.addGuide(this);
+            trip.setGuide(this);
         }
     }
 

@@ -1,6 +1,8 @@
 package facades;
 
 import dtos.TripDTO;
+import entities.Guide;
+import entities.Tourist;
 import entities.Trip;
 import exceptions.MissingInputException;
 import exceptions.TripNotFoundException;
@@ -32,18 +34,18 @@ public class TripFacade {
         return emf.createEntityManager();
     }
     
-    public TripDTO create(TripDTO pd) throws TripNotFoundException,MissingInputException {
-      Trip passenger = new Trip(pd.getName(), pd.getDate(), pd.getTime(),pd.getLocation(), pd.getDuration(), pd.getPackingList());
+    public TripDTO create(String name, String date, String time, String location, String duration, String packingList) throws TripNotFoundException,MissingInputException {
+      Trip trip = new Trip(name,date,time,location,duration,packingList);
 
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(passenger);
+            em.persist(trip);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new TripDTO(passenger);
+        return new TripDTO(trip);
     }
     public TripDTO getTripById(int id) throws TripNotFoundException {
             EntityManager em = getEntityManager();
@@ -54,7 +56,38 @@ public class TripFacade {
             return new TripDTO(trip);
         }
 
+    public TripDTO editTrip(TripDTO tripDTO) throws TripNotFoundException , MissingInputException {
+        EntityManager em = getEntityManager();
+        Trip trip = new Trip(tripDTO.getName(), tripDTO.getDate(),
+                tripDTO.getTime(),tripDTO.getLocation(),tripDTO.getDuration(),tripDTO.getPackingList());
+        trip.setId(tripDTO.getId());
+        try {
+            em.getTransaction().begin();
+            em.merge(trip);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new TripDTO(trip);
+    }
 
+    public TripDTO deletetrip(int id) throws TripNotFoundException {
+        EntityManager em = getEntityManager();
+        Trip trip = em.find(Trip.class, id);
+        Guide guide= em.find(Guide.class, trip.getGuide().getId());
+        if (trip == null) {
+            throw new TripNotFoundException(404, "Could not delete, provided id does not exist");
+        }
+        try {
+            em.getTransaction().begin();
+            em.remove(trip);
+            em.remove(guide);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new TripDTO(trip);
+    }
     
 
     public long getTripsCount() throws TripNotFoundException {

@@ -6,6 +6,7 @@
 package dtos;
 
 
+import entities.Guide;
 import entities.Trip;
 
 import java.util.ArrayList;
@@ -25,15 +26,15 @@ public class TripDTO {
     private String gender;
     private long birthYear;
     private String profile;
-    List<GuideDTO> guideDTOS;
+    private GuideDTO guideDTO;
 
 
-    public List<GuideDTO> getGuideDTOS() {
-        return guideDTOS;
+    public GuideDTO getGuideDTO() {
+        return guideDTO;
     }
 
-    public void setGuideDTOS(List<GuideDTO> guideDTOS) {
-        this.guideDTOS = guideDTOS;
+    public void setGuideDTO(GuideDTO guideDTO) {
+        this.guideDTO = guideDTO;
     }
 
     public TripDTO(String name, String date, String time, String location, String duration, String packingList) {
@@ -62,7 +63,7 @@ public class TripDTO {
             this.location = trip.getLocation();
             this.duration = trip.getDuration();
             this.packingList = trip.getPackingList();
-        this.guideDTOS= GuideDTO.getDtos(trip.getGuides());
+
         }
 
     public int getId() {
