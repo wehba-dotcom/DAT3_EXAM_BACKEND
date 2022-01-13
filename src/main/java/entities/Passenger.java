@@ -35,7 +35,6 @@ public class Passenger implements Serializable {
         this.duration = duration;
         this.packingList = packingList;
     }
-
     public int getId() {
         return id;
     }
