@@ -1,38 +1,45 @@
 package rest;
 
-import entities.RenameMe;
-import utils.EMF_Creator;
+
+import entities.Passenger;
 import io.restassured.RestAssured;
-import static io.restassured.RestAssured.given;
+import io.restassured.matcher.ResponseAwareMatcher;
 import io.restassured.parsing.Parser;
-import java.net.URI;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.core.UriBuilder;
+import io.restassured.response.Response;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.Matchers.equalTo;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-//Uncomment the line below, to temporarily disable this test
-//@Disabled
+import utils.EMF_Creator;
 
-public class RenameMeResourceTest {
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
+
+import static io.restassured.RestAssured.given;
+import static org.glassfish.jersey.internal.guava.Predicates.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+
+public class PassengerResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static RenameMe r1, r2;
+    private static Passenger r1;
+    private static Passenger r2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
 
-    static HttpServer startServer() {
+    static org.glassfish.grizzly.http.server.HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
@@ -52,23 +59,20 @@ public class RenameMeResourceTest {
 
     @AfterAll
     public static void closeTestServer() {
-        //System.in.read();
-
-        //Don't forget this, if you called its counterpart in @BeforeAll
         EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
     }
 
-    // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
+
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new RenameMe("Some txt", "More text");
-        r2 = new RenameMe("aaa", "bbb");
+        r1 = new Passenger("PN1", "PD1", "PT1","PL1","PD1","PP1");
+        r2 = new Passenger("PN2", "PD2", "PT2","PL2","PD2","PP2");
+
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Passenger.deleteAllRows").executeUpdate();
             em.persist(r1);
             em.persist(r2);
             em.getTransaction().commit();
@@ -79,18 +83,21 @@ public class RenameMeResourceTest {
 
     @Test
     public void testServerIsUp() {
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/passenger").then().statusCode(200);
     }
 
-    //This test assumes the database contains two rows
+
+
+
+
     @Test
-    public void testDummyMsg() throws Exception {
+    void getAllPersons() {
         given()
-                .contentType("application/json")
-                .get("/xxx/").then()
+                .contentType(MediaType.APPLICATION_JSON)
+                .get("/passenger/all").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("msg", equalTo("Hello World"));
+                .body("all", hasSize(2));
     }
 
 
