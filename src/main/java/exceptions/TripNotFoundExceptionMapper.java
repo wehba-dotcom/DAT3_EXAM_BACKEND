@@ -20,12 +20,12 @@ import java.util.logging.Logger;
  * @author jobe
  */
 @Provider
-public class PassengerNotFoundExceptionMapper implements ExceptionMapper<PassengerNotFoundException>
+public class TripNotFoundExceptionMapper implements ExceptionMapper<TripNotFoundException>
 {
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();   
     @Override
-    public Response toResponse(PassengerNotFoundException ex) {
-       Logger.getLogger(PassengerNotFoundExceptionMapper.class.getName())
+    public Response toResponse(TripNotFoundException ex) {
+       Logger.getLogger(TripNotFoundExceptionMapper.class.getName())
            .log(Level.SEVERE, null, ex);
        ExceptionDTO err = new ExceptionDTO(404,ex.getMessage());
        return Response

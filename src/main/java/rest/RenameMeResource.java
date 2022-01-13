@@ -2,10 +2,10 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import exceptions.PassengerNotFoundException;
-import facades.PassengerFacade;
+import exceptions.TripNotFoundException;
+import facades.TripFacade;
 import utils.EMF_Creator;
-import facades.FacadeExample;
+
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,7 +18,7 @@ public class RenameMeResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
        
-    private static final PassengerFacade FACADE =  PassengerFacade.getPassengerFacade(EMF);
+    private static final TripFacade FACADE =  TripFacade.getTripFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
@@ -29,16 +29,16 @@ public class RenameMeResource {
     @Path("count")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getRenameMeCount() throws PassengerNotFoundException {
+    public String getRenameMeCount() throws TripNotFoundException {
        
-        long count = FACADE.getPassengerCount();
+        long count = FACADE.getTripsCount();
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
-    public String allBoats() throws PassengerNotFoundException {
-        return GSON.toJson(FACADE.getAllPassenger());
+    public String allTrips() throws TripNotFoundException {
+        return GSON.toJson(FACADE.getAllTrips());
     }
 }

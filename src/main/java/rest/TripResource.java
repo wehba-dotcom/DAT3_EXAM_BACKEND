@@ -6,8 +6,8 @@ import com.google.gson.GsonBuilder;
 
 
 
-import exceptions.PassengerNotFoundException;
-import facades.PassengerFacade;
+import exceptions.TripNotFoundException;
+import facades.TripFacade;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
@@ -19,12 +19,12 @@ import javax.ws.rs.core.MediaType;
 
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("passenger")
-public class PassengerResource {
+@Path("trip")
+public class TripResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
        
-    private static final PassengerFacade FACADE =  PassengerFacade.getPassengerFacade(EMF);
+    private static final TripFacade FACADE =  TripFacade.getTripFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
@@ -35,9 +35,9 @@ public class PassengerResource {
     @Path("count")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getpassengersCount() throws PassengerNotFoundException {
+    public String getTripsCount() throws TripNotFoundException {
        
-        long count = FACADE.getPassengerCount();
+        long count = FACADE.getTripsCount();
 
         return "{\"count\":"+count+"}";
     }
@@ -46,8 +46,8 @@ public class PassengerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
-    public String allPassengers() throws PassengerNotFoundException {
-        return GSON.toJson(FACADE.getAllPassenger());
+    public String allTrips() throws TripNotFoundException {
+        return GSON.toJson(FACADE.getAllTrips());
     }
 
 

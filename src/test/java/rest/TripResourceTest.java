@@ -1,17 +1,13 @@
 package rest;
 
 
-import entities.Passenger;
+import entities.Trip;
 import io.restassured.RestAssured;
-import io.restassured.matcher.ResponseAwareMatcher;
 import io.restassured.parsing.Parser;
-import io.restassured.response.Response;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,15 +21,14 @@ import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 
 import static io.restassured.RestAssured.given;
-import static org.glassfish.jersey.internal.guava.Predicates.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
-public class PassengerResourceTest {
+public class TripResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Passenger r1;
-    private static Passenger r2;
+    private static Trip r1;
+    private static Trip r2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -67,12 +62,12 @@ public class PassengerResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new Passenger("PN1", "PD1", "PT1","PL1","PD1","PP1");
-        r2 = new Passenger("PN2", "PD2", "PT2","PL2","PD2","PP2");
+        r1 = new Trip("PN1", "PD1", "PT1","PL1","PD1","PP1");
+        r2 = new Trip("PN2", "PD2", "PT2","PL2","PD2","PP2");
 
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Passenger.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Trip.deleteAllRows").executeUpdate();
             em.persist(r1);
             em.persist(r2);
             em.getTransaction().commit();
@@ -91,10 +86,10 @@ public class PassengerResourceTest {
 
 
     @Test
-    void getAllPersons() {
+    void getAllTrips() {
         given()
                 .contentType(MediaType.APPLICATION_JSON)
-                .get("/passenger/all").then()
+                .get("/trip/all").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("all", hasSize(2));

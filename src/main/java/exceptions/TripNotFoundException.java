@@ -9,8 +9,8 @@ package exceptions;
  *
  * @author jobe
  */
-public class PassengerNotFoundException extends Exception {
-    public PassengerNotFoundException(int i, String message) {
+public class TripNotFoundException extends Exception {
+    public TripNotFoundException(int i, String message) {
         super(message);
     }
 }

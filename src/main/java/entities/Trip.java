@@ -9,8 +9,8 @@ import java.util.Objects;
 
 
 @Entity
-@NamedQuery(name = "Passenger.deleteAllRows", query = "DELETE from Passenger")
-public class Passenger implements Serializable {
+@NamedQuery(name = "Trip.deleteAllRows", query = "DELETE from Trip")
+public class Trip implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,10 +24,10 @@ public class Passenger implements Serializable {
     private String packingList;
 
 
-    public Passenger() {
+    public Trip() {
     }
 
-    public Passenger(String name, String date, String time, String location, String duration, String packingList) {
+    public Trip(String name, String date, String time, String location, String duration, String packingList) {
         this.name = name;
         this.date = date;
         this.time = time;

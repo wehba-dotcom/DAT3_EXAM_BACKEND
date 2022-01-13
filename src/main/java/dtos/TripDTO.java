@@ -6,7 +6,7 @@
 package dtos;
 
 
-import entities.Passenger;
+import entities.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Objects;
  *
  * @author tha
  */
-public class PassengerDTO {
+public class TripDTO {
     private int id;
     private String name;
     private String date;
@@ -26,7 +26,7 @@ public class PassengerDTO {
     private String packingList;
 
 
-    public PassengerDTO(String name, String date, String time, String location, String duration, String packingList) {
+    public TripDTO(String name, String date, String time, String location, String duration, String packingList) {
         this.name = name;
         this.date = date;
         this.time = time;
@@ -35,14 +35,14 @@ public class PassengerDTO {
         this.packingList = packingList;
     }
 
-    public static List<PassengerDTO> getDtos(List<Passenger> passengers){
-        List<PassengerDTO> passengerDTOS = new ArrayList<>();
-        passengers.forEach(passenger->passengerDTOS.add(new PassengerDTO(passenger)));
+    public static List<TripDTO> getDtos(List<Trip> passengers){
+        List<TripDTO> passengerDTOS = new ArrayList<>();
+        passengers.forEach(passenger->passengerDTOS.add(new TripDTO(passenger)));
         return passengerDTOS;
     }
 
 
-    public PassengerDTO(Passenger passenger) {
+    public TripDTO(Trip passenger) {
 
             this.id = passenger.getId();
             this.name = passenger.getName();
@@ -112,8 +112,8 @@ public class PassengerDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PassengerDTO)) return false;
-        PassengerDTO that = (PassengerDTO) o;
+        if (!(o instanceof TripDTO)) return false;
+        TripDTO that = (TripDTO) o;
         return getId() == that.getId() && Objects.equals(getName(), that.getName()) && Objects.equals(getDate(), that.getDate()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getLocation(), that.getLocation()) && Objects.equals(getDuration(), that.getDuration()) && Objects.equals(getPackingList(), that.getPackingList());
     }
 
