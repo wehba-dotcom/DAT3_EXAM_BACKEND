@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -23,6 +25,13 @@ public class Trip implements Serializable {
     private String duration;
     private String packingList;
 
+    @OneToMany(mappedBy = "trip", cascade =CascadeType.PERSIST )
+    List<Guide> guides;
+
+
+    @ManyToMany(mappedBy = "trips", cascade =CascadeType.PERSIST )
+    List<Tourist> tourists;
+
 
     public Trip() {
     }
@@ -34,6 +43,19 @@ public class Trip implements Serializable {
         this.location = location;
         this.duration = duration;
         this.packingList = packingList;
+        this.guides= new ArrayList<>();
+        this.tourists= new ArrayList<>();
+    }
+
+    public List<Guide> getGuides() {
+        return guides;
+    }
+
+    public void addGuide(Guide guide) {
+        this.guides.add(guide);
+        if (guide != null) {
+            guide.setTrip(this);
+        }
     }
     public int getId() {
         return id;

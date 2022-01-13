@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- *
- * @author tha
- */
+
 public class TripDTO {
     private int id;
     private String name;
@@ -24,7 +21,20 @@ public class TripDTO {
     private String location;
     private String duration;
     private String packingList;
+    private String nameg;
+    private String gender;
+    private long birthYear;
+    private String profile;
+    List<GuideDTO> guideDTOS;
 
+
+    public List<GuideDTO> getGuideDTOS() {
+        return guideDTOS;
+    }
+
+    public void setGuideDTOS(List<GuideDTO> guideDTOS) {
+        this.guideDTOS = guideDTOS;
+    }
 
     public TripDTO(String name, String date, String time, String location, String duration, String packingList) {
         this.name = name;
@@ -33,6 +43,7 @@ public class TripDTO {
         this.location = location;
         this.duration = duration;
         this.packingList = packingList;
+
     }
 
     public static List<TripDTO> getDtos(List<Trip> passengers){
@@ -42,15 +53,16 @@ public class TripDTO {
     }
 
 
-    public TripDTO(Trip passenger) {
+    public TripDTO(Trip trip) {
 
-            this.id = passenger.getId();
-            this.name = passenger.getName();
-            this.date = passenger.getDate();
-            this.time = passenger.getTime();
-            this.location = passenger.getLocation();
-            this.duration = passenger.getDuration();
-            this.packingList = passenger.getPackingList();
+            this.id = trip.getId();
+            this.name = trip.getName();
+            this.date = trip.getDate();
+            this.time = trip.getTime();
+            this.location = trip.getLocation();
+            this.duration = trip.getDuration();
+            this.packingList = trip.getPackingList();
+        this.guideDTOS= GuideDTO.getDtos(trip.getGuides());
         }
 
     public int getId() {
