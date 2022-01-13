@@ -36,6 +36,7 @@ public class Tourist implements Serializable {
         this.trips = trips;
     }
 
+
     public Tourist() {
     }
 
