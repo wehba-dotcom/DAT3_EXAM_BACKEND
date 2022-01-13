@@ -78,7 +78,7 @@ public class TripResourceTest {
 
     @Test
     public void testServerIsUp() {
-        given().when().get("/passenger").then().statusCode(200);
+        given().when().get("/trip").then().statusCode(200);
     }
 
 
