@@ -43,6 +43,7 @@ public class Guide implements Serializable {
         this.gender = gender;
         this.birthYear = birthYear;
         this.profile = profile;
+        this.trips = new ArrayList<>();
     }
 
     public int getId() {

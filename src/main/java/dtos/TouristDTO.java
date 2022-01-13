@@ -22,14 +22,16 @@ public class TouristDTO {
     private String email;
     private int birthyear;
     private String gender;
+    List<TripDTO> tripDTOS;
 
 
-    public TouristDTO(String address, long phone, String email, int birthyear, String gender) {
+    public TouristDTO(String address, long phone, String email, int birthyear, String gender,List<TripDTO> tripDTOS) {
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.birthyear = birthyear;
         this.gender = gender;
+        this.tripDTOS = tripDTOS;
     }
 
     public static List<TouristDTO> getDtos(List<Tourist> tourists){

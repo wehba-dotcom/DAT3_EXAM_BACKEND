@@ -66,13 +66,17 @@ public class Populator {
         Tourist tourist1= new Tourist("Rønne",456456,"weg@wrew",1983,"male");
         Tourist tourist2= new Tourist("Allinge",234234,"wwww@wrew",1993,"female");
 
+         trip1.AddTourist(tourist1);
+         trip2.AddTourist(tourist2);
 
-
+         guide1.addTrip(trip1);
+         guide2.addTrip(trip2);
 
 
         em.getTransaction().begin();
-        em.persist(tourist1);
-        em.persist(tourist2);
+        em.persist(trip1);
+        em.persist(guide1);
+        em.persist(guide2);
         em.getTransaction().commit();
 
 
@@ -84,6 +88,6 @@ public class Populator {
 
     
     public static void main(String[] args) throws TripNotFoundException, MissingInputException {
-        populate4();
+        populate2();
     }
 }

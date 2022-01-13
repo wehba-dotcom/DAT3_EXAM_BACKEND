@@ -20,9 +20,17 @@ public class GuideDTO {
     private String gender;
     private long birthYear;
     private String profile;
+    List<TripDTO> tripDTOS;
 
+    public List<TripDTO> getTripDTOS() {
+        return tripDTOS;
+    }
 
-    public GuideDTO(String name, String gender, long birthYear, String profile) {
+    public void setTripDTOS(List<TripDTO> tripDTOS) {
+        this.tripDTOS = tripDTOS;
+    }
+
+    public GuideDTO(String name, String gender, long birthYear, String profile,List<TripDTO> tripDTOS) {
         this.name = name;
         this.gender = gender;
         this.birthYear = birthYear;
@@ -43,6 +51,7 @@ public class GuideDTO {
         this.gender = guide.getGender();
         this.birthYear = guide.getBirthYear();
         this.profile = guide.getProfile();
+        this.tripDTOS= TripDTO.getDtos(guide.getTrips());
     }
 
     public int getId() {

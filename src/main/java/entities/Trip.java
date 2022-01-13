@@ -42,7 +42,6 @@ public class Trip implements Serializable {
         this.location = location;
         this.duration = duration;
         this.packingList = packingList;
-
         this.tourists= new ArrayList<>();
     }
 
@@ -53,6 +52,13 @@ public class Trip implements Serializable {
     public void setGuide(Guide guide) {
         this.guide = guide;
     }
+    public void AddTourist(Tourist tourist){
+        if(tourist != null){
+            this.tourists.add(tourist);
+            tourist.getTrips().add(this);
+        }
+    }
+
 
     public int getId() {
         return id;

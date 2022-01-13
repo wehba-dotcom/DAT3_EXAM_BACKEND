@@ -26,18 +26,18 @@ public class TripDTO {
     private String gender;
     private long birthYear;
     private String profile;
-    private GuideDTO guideDTO;
+    private List<GuideDTO> guideDTOS;
 
 
-    public GuideDTO getGuideDTO() {
-        return guideDTO;
+    public List<GuideDTO> getGuideDTOS() {
+        return guideDTOS;
     }
 
-    public void setGuideDTO(GuideDTO guideDTO) {
-        this.guideDTO = guideDTO;
+    public void setGuideDTOS(List<GuideDTO> guideDTOS) {
+        this.guideDTOS = guideDTOS;
     }
 
-    public TripDTO(String name, String date, String time, String location, String duration, String packingList) {
+    public TripDTO(String name, String date, String time, String location, String duration, String packingList, List<GuideDTO> guideDTOS) {
         this.name = name;
         this.date = date;
         this.time = time;
@@ -63,7 +63,6 @@ public class TripDTO {
             this.location = trip.getLocation();
             this.duration = trip.getDuration();
             this.packingList = trip.getPackingList();
-
         }
 
     public int getId() {

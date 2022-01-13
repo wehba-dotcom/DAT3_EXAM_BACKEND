@@ -96,4 +96,7 @@ public class Tourist implements Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public Tourist(List<Trip> trips){
+    this.trips = trips;
+    }
 }
